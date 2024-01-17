@@ -1,0 +1,10 @@
+*.cmd
+*.mod
+*.mod.c
+*.mod.o
+*.ko
+*.o
+
+/Module.symvers
+/modules.order
+/fsdax-client
