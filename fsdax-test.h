@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Michael Jeanson <mjeanson@efficios.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only
+
 #include <linux/ioctl.h>
 
 struct fsdax_umap {

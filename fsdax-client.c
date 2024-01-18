@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Michael Jeanson <mjeanson@efficios.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only
+
 #define _GNU_SOURCE
 #include <sys/mman.h>
 #include <sys/stat.h>	/* For mode constants */

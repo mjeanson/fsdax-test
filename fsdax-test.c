@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Michael Jeanson <mjeanson@efficios.com>
+//
+// SPDX-License-Identifier: GPL-2.0-only
+
 #include <asm/errno.h>
 #include <asm/uaccess.h>
 #include <linux/device.h>
@@ -17,7 +21,7 @@
 #include <linux/highmem.h>
 
 #include "fsdax-test.h"
- 
+
 struct fsdax_kmap {
 	char *kaddr;
 	char *uaddr;
@@ -144,7 +148,6 @@ static int fsdax_map_pages(char *uaddr, size_t size)
 		strcpy(daxkmap.kaddr, "The kernel was here!");
 
 		pr_info("fsdax-test: Wrote: '%s'\n", daxkmap.kaddr);
-		
 	} else {
 	    pr_err("fsdax-test: Couldn't get all %ld pages :(\n", daxkmap.nr_pages);
 	    ret = -1;
@@ -193,7 +196,7 @@ static int fsdax_unmap_pages(char *uaddr, size_t size)
 
 	pr_info("fsdax-test: Unmapping pages at 0x%p\n", daxkmap.kaddr);
 	vunmap(daxkmap.kaddr);
-	
+
 	pr_info("fsdax-test: Putting %ld pages\n", daxkmap.nr_pages);
 	for (int i=0; i<daxkmap.nr_pages; i++) {
 		// Not sure this is required for DAX backed mappings
@@ -235,7 +238,7 @@ static long fsdax_test_ioctl(struct file *file, unsigned int cmd, unsigned long 
 			ret = fsdax_map_pages(umap.addr, umap.size);
 
 		        break;
-		
+
 		case FSDAX_TEST_IOCTL_UNMAP:
 		        if (copy_from_user(&umap ,(struct fsdax_umap *) arg, sizeof(struct fsdax_umap))) {
 		                pr_err("fsdax-test: ioctl UNMAP failed copy_from_user()\n");
@@ -247,7 +250,7 @@ static long fsdax_test_ioctl(struct file *file, unsigned int cmd, unsigned long 
 			ret = fsdax_unmap_pages(umap.addr, umap.size);
 
 		        break;
-		
+
 		default:
 		        pr_info("fsdax-test: Unknown ioctl: %u\n", cmd);
 			ret = -2;
@@ -257,7 +260,7 @@ err:
 	pr_info("fsdax-test: ioctl return with %ld\n", ret);
 	return ret;
 }
- 
+
 /*
  * Module Init function
  */
@@ -290,10 +293,10 @@ static void __exit fsdax_test_exit(void)
 	unregister_chrdev(FSDAX_TEST_MAJOR_NUM, FSDAX_TEST_DEVICE_FILE_NAME);
         pr_info("fsdax-test: Module unloaded\n");
 }
- 
+
 module_init(fsdax_test_init);
 module_exit(fsdax_test_exit);
- 
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Michael Jeanson <mjeanson@efficios.com>");
 MODULE_DESCRIPTION("FSDAX tests");
